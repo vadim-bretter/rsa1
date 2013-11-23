@@ -2,7 +2,7 @@
 #include "ui_mainwindow.h"
 #include "BigIntegerLibrary.hh"
 #include "BigIntegerUtils.hh"
-#include <Qstring>
+#include <string>
 #include <fstream>
 #include <QTime>
 #include <QFile>
@@ -50,9 +50,9 @@ void MainWindow::openkey2()
     FN.open(QIODevice::ReadOnly);
 qint64 L;
 L = FN.size();
-QByteArray dB;
-dB = FN.readAll();
-ui->lineEdit_2->setText(dB);
+QByteArray d;
+d = FN.readAll();
+ui->lineEdit_2->setText(d);
 }
 void MainWindow::saven()
 {
@@ -65,9 +65,9 @@ void MainWindow::saven()
     FN.open(QIODevice::ReadOnly);
 qint64 L;
 L = FN.size();
-QByteArray nB;
-nB = FN.readAll();
-ui->lineEdit->setText(nB);
+QByteArray B;
+B = FN.readAll();
+ui->lineEdit->setText(B);
 }
 
 void MainWindow::display()
@@ -83,7 +83,7 @@ void MainWindow::Start()
     string str;
 
     // используемые переменные
-    BigInteger  n, e,nB , eB, mA, meA, me, fiB, dB, mB, pB, qB;
+    BigInteger   nB, meA, dB, mB, n;
 
 
     // **************************************************************************
@@ -95,15 +95,15 @@ void MainWindow::Start()
 
 
     //  выбираем сообщение m
-    meA = stringToBigInteger( ui->indan->toPlainText() );
-    dB = stringToBigInteger(ui->lineEdit->Text().toStdString() );
-    nB = stringToBigInteger( ui->lineEdit_2->Text().toStdString() );
+    meA = stringToBigInteger( ui->indan->toPlainText().toStdString()  );
+    dB = stringToBigInteger(ui->lineEdit_2->text().toStdString()  );
+    nB = stringToBigInteger( ui->lineEdit->text().toStdString()  );
     // расшифровывем сообщение
-
-    mB = modexp( meA, dB.getMagnitude(), nB.getMagnitude() );
+    n = nB.getMagnitude();
+    mB = modexp( meA, dB.getMagnitude(), n.getMagnitude() );
     qDebug() << QString::fromStdString(bigIntegerToString(meA));
     qDebug() << QString::fromStdString(bigIntegerToString(dB));
-    qDebug() << QString::fromStdString(bigIntegerToString(nB));
+    qDebug() << QString::fromStdString(bigIntegerToString(n));
     qDebug() << QString::fromStdString(bigIntegerToString(mB));
     QFile FN(ui->linesave->text());
     FN.open(QIODevice::WriteOnly);
